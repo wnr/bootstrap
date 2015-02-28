@@ -73,23 +73,40 @@
 
     <script src="../dist/js/elq.js"></script>
     <script src="../dist/js/elq-breakpoints.js"></script>
+    <script src="../dist/js/elq-mirror.js"></script>
     <script>      
       function elqify() {
-        var elements = $(".navbar, .bs-docs-header, .doc-container, .table-responsive");
+        function doBreakpoints() {
+          var elements = $(".navbar, .bs-docs-header, .doc-container, .table-responsive");
 
-        elements.each(function(i, e) {
-          $(e).attr("elq", "");
-          $(e).attr("elq-breakpoints", "");
-          $(e).attr("elq-breakpoints-width", "480 768 992 1200");
-        });
+          elements.each(function(i, e) {
+            $(e).attr("elq", "");
+            $(e).attr("elq-breakpoints", "");
+            $(e).attr("elq-breakpoints-width", "480 768 992 1200");
+          });
 
-        return elements;
+          return elements;
+        }
+        
+        function doMirrors() {
+          var elements = $(".visible-xs, .visible-sm, .visible-md, .visible-lg, .visible-xs-block, .visible-xs-inline, .visible-xs-inline-block, .visible-sm-block, .visible-sm-inline, .visible-sm-inline-block, .visible-md-block, .visible-md-inline, .visible-md-inline-block, .visible-lg-block, .visible-lg-inline, .visible-lg-inline-block");
+
+          elements.each(function(i, e) {
+            $(e).attr("elq", "");
+            $(e).attr("elq-mirror", "");
+          });
+
+          return elements;
+        }
+
+        return $.merge(doBreakpoints(), doMirrors());
       }
 
       elqBreakpoints.setConfig({
         postfix: "px"
       });
       elq.use(elqBreakpoints);
+      elq.use(elqMirror);
       elq.start(elqify());
     </script>
   </body>
