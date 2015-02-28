@@ -53,9 +53,7 @@
 // Columns, offsets, pushes, and pulls for extra small devices like
 // smartphones.
 
-.row {
-  .make-grid(xs);
-}
+.make-grid(xs);
 
 
 // Small grid
@@ -63,7 +61,7 @@
 // Columns, offsets, pushes, and pulls for the small device range, from phones
 // to tablets.
 
-.elq-width-above-@{screen-sm-min}.row {
+.elq-width-above-@{screen-sm-min} {
   .make-grid(sm);    
 }
 
@@ -71,7 +69,7 @@
 //
 // Columns, offsets, pushes, and pulls for the desktop device range.
 
-.elq-width-above-@{screen-md-min}.row {
+.elq-width-above-@{screen-md-min} {
   .make-grid(md);
 }
 
@@ -80,6 +78,6 @@
 //
 // Columns, offsets, pushes, and pulls for the large desktop device range.
 
-.elq-width-above-@{screen-lg-min}.row {
+.elq-width-above-@{screen-lg-min} {
   .make-grid(lg);
 }

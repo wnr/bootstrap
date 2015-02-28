@@ -89,7 +89,20 @@
         }
         
         function doMirrors() {
-          var elements = $(".table-responsive, .form-horizontal, .row, .visible-xs, .visible-sm, .visible-md, .visible-lg, .visible-xs-block, .visible-xs-inline, .visible-xs-inline-block, .visible-sm-block, .visible-sm-inline, .visible-sm-inline-block, .visible-md-block, .visible-md-inline, .visible-md-inline-block, .visible-lg-block, .visible-lg-inline, .visible-lg-inline-block, .hidden-xs, .hidden-sm, .hidden-md, .hidden-lg, .form-inline");
+          function getColSelectors(size) {
+            var selector = "";
+            for(var i = 1; i <= 12; i++) {
+              selector += ".col-" + size + "-" + i + (i === 12 ? "" : ", ");
+            }
+            return selector;
+          }
+
+          var selector = ".table-responsive, .form-horizontal, .form-inline, .row, .visible-xs, .visible-sm, .visible-md, .visible-lg, .visible-xs-block, .visible-xs-inline, .visible-xs-inline-block, .visible-sm-block, .visible-sm-inline, .visible-sm-inline-block, .visible-md-block, .visible-md-inline, .visible-md-inline-block, .visible-lg-block, .visible-lg-inline, .visible-lg-inline-block, .hidden-xs, .hidden-sm, .hidden-md, .hidden-lg, .form-inline";
+          selector += getColSelectors("sm");
+          selector += getColSelectors("md");
+          selector += getColSelectors("lg");
+
+          var elements = $(selector);
 
           elements.each(function(i, e) {
             $(e).attr("elq", "");
