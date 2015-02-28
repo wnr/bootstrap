@@ -77,7 +77,7 @@
     <script>      
       function elqify() {
         function doBreakpoints() {
-          var elements = $(".navbar, .bs-docs-header, .doc-container, .table-responsive");
+          var elements = $(".navbar, .bs-docs-header, .doc-container, .table-responsive, .bs-docs-footer");
 
           elements.each(function(i, e) {
             $(e).attr("elq", "");
@@ -89,7 +89,7 @@
         }
         
         function doMirrors() {
-          var elements = $(".visible-xs, .visible-sm, .visible-md, .visible-lg, .visible-xs-block, .visible-xs-inline, .visible-xs-inline-block, .visible-sm-block, .visible-sm-inline, .visible-sm-inline-block, .visible-md-block, .visible-md-inline, .visible-md-inline-block, .visible-lg-block, .visible-lg-inline, .visible-lg-inline-block");
+          var elements = $(".visible-xs, .visible-sm, .visible-md, .visible-lg, .visible-xs-block, .visible-xs-inline, .visible-xs-inline-block, .visible-sm-block, .visible-sm-inline, .visible-sm-inline-block, .visible-md-block, .visible-md-inline, .visible-md-inline-block, .visible-lg-block, .visible-lg-inline, .visible-lg-inline-block, .hidden-xs, .hidden-sm, .hidden-md, .hidden-lg  ");
 
           elements.each(function(i, e) {
             $(e).attr("elq", "");

@@ -178,10 +178,8 @@ body {
   padding-left: 0;
 }
 
-@media (min-width: 768px) {
-  .bs-docs-footer p {
-    margin-bottom: 0;
-  }
+.elq-width-above-768px .bs-docs-footer p {
+  margin-bottom: 0;
 }
 
 
@@ -768,11 +766,9 @@ h1[id] {
   border-radius: 3px;
 }
 
-@media (min-width: 768px) {
-  .color-swatch {
-    width: 100px;
-    height: 100px;
-  }
+.elq-width-above-768px .color-swatch {
+  width: 100px;
+  height: 100px;
 }
 
 /* Framework colors */
@@ -1083,11 +1079,9 @@ h1[id] {
 .bs-navbar-bottom-example .navbar {
   margin-bottom: 0;
 }
-@media (min-width: 768px) {
-  .bs-navbar-top-example .navbar-fixed-top,
-  .bs-navbar-bottom-example .navbar-fixed-bottom {
-    position: absolute;
-  }
+.elq-width-above-768px .bs-navbar-top-example .navbar-fixed-top,
+.elq-width-above-768px .bs-navbar-bottom-example .navbar-fixed-bottom {
+  position: absolute;
 }
 
 /* Pagination */
