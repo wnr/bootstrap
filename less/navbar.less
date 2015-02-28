@@ -76,27 +76,22 @@
   &.in {
     overflow-y: visible;
   }
-
-  // Undo the collapse side padding for navbars with containers to ensure
-  // alignment of right-aligned contents.
-  .navbar-fixed-top &,
-  .navbar-static-top &,
-  .navbar-fixed-bottom & {
-    padding-left: 0;
-    padding-right: 0;
-  }
 }
 
-.navbar-fixed-top,
-.navbar-fixed-bottom {
-  .navbar-collapse {
-    max-height: @navbar-collapse-max-height;
-
-    @media (max-device-width: @screen-xs-min) and (orientation: landscape) {
-      max-height: 200px;
+.navbar.elq-width-above-@{grid-float-breakpoint} {
+  // Undo the collapse side padding for navbars with containers to ensure
+  // alignment of right-aligned contents.
+  &.navbar-fixed-top,
+  &.navbar-static-top,
+  &.navbar-fixed-bottom {
+    .navbar-collapse {
+      padding-left: 0;
+      padding-right: 0; 
     }
   }
 }
+
+
 
 
 // Both navbar header and collapse
