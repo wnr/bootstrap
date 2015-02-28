@@ -2334,10 +2334,13 @@ module.exports = BreakpointsExtension;
 
 function BreakpointsExtension() {
     Extension.call(this, "elq-breakpoints");
+    
+    this.config = {};
+    this.config.postfix = "";
 }
 
 BreakpointsExtension.prototype.start = function(elq, elements) {
-    function onElementResize(element) {
+    function onElementResize(config, element) {
         function getAttributeOrDefault(attr, defaultValue) {
             return element.hasAttribute(attr) ? parseInt(element.getAttribute(attr)) : defaultValue;
         }
@@ -2408,7 +2411,7 @@ BreakpointsExtension.prototype.start = function(elq, elements) {
                     dir = "above";
                 }
 
-                classes.push("elq-" + dimension + "-" + dir + "-" + breakpoint);
+                classes.push("elq-" + dimension + "-" + dir + "-" + breakpoint + config.postfix);
             });
 
             return classes;
@@ -2427,7 +2430,8 @@ BreakpointsExtension.prototype.start = function(elq, elements) {
         var classes = element.className;
 
         //Remove all old breakpoints.
-        classes = classes.replace(/elq-(width|height)-[a-z]+-[0-9]+/g, "");
+        var breakpointRegexp = new RegExp("elq-(width|height)-[a-z]+-[0-9]+" + config.postfix, "g"); 
+        classes = classes.replace(breakpointRegexp, "");
 
         //Add new classes
         classes += " " + classesString;
@@ -2438,13 +2442,20 @@ BreakpointsExtension.prototype.start = function(elq, elements) {
         element.className = classes;
     }
 
+    var onElementResize = onElementResize.bind(null, this.config);
+
     forEach(elements, function(element) {
         if(element.hasAttribute("elq-breakpoints")) {
             elq.listenTo(element, onElementResize);
             onElementResize(element);
         }
-    });
+    }, this);
 };
+
+BreakpointsExtension.prototype.setConfig = function(config) {
+    config = config || {};
+    this.config.postfix = config.postfix || "";
+}
 
 },{"../extension/extension":25,"lodash.foreach":1,"lodash.uniq":9}]},{},[26])(26)
 });

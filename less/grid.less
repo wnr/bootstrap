@@ -10,13 +10,13 @@
 .container {
   .container-fixed();
 
-  @media (min-width: @screen-sm-min) {
+  .elq-width-above-@{screen-sm-min} > & {
     width: @container-sm;
   }
-  @media (min-width: @screen-md-min) {
+  .elq-width-above-@{screen-md-min} > & {
     width: @container-md;
   }
-  @media (min-width: @screen-lg-min) {
+  .elq-width-above-@{screen-lg-min} > & {
     width: @container-lg;
   }
 }
@@ -53,7 +53,9 @@
 // Columns, offsets, pushes, and pulls for extra small devices like
 // smartphones.
 
-.make-grid(xs);
+.row {
+  .make-grid(xs);
+}
 
 
 // Small grid
@@ -61,16 +63,15 @@
 // Columns, offsets, pushes, and pulls for the small device range, from phones
 // to tablets.
 
-@media (min-width: @screen-sm-min) {
-  .make-grid(sm);
+.elq-width-above-@{screen-sm-min} > .row {
+  .make-grid(sm);    
 }
-
 
 // Medium grid
 //
 // Columns, offsets, pushes, and pulls for the desktop device range.
 
-@media (min-width: @screen-md-min) {
+.elq-width-above-@{screen-md-min} > .row {
   .make-grid(md);
 }
 
@@ -79,6 +80,6 @@
 //
 // Columns, offsets, pushes, and pulls for the large desktop device range.
 
-@media (min-width: @screen-lg-min) {
+.elq-width-above-@{screen-lg-min} > .row {
   .make-grid(lg);
 }

@@ -73,9 +73,24 @@
 
     <script src="../dist/js/elq.js"></script>
     <script src="../dist/js/elq-breakpoints.js"></script>
-    <script>
+    <script>      
+      function elqify() {
+        var elements = $(".navbar, .bs-docs-header, .doc-container, .table-responsive");
+
+        elements.each(function(i, e) {
+          $(e).attr("elq", "");
+          $(e).attr("elq-breakpoints", "");
+          $(e).attr("elq-breakpoints-width", "480 768 992 1200");
+        });
+
+        return elements;
+      }
+
+      elqBreakpoints.setConfig({
+        postfix: "px"
+      });
       elq.use(elqBreakpoints);
-      elq.start($("[elq]"));
+      elq.start(elqify());
     </script>
   </body>
 </html>
