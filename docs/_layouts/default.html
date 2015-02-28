@@ -90,7 +90,7 @@
         
         function doMirrors() {
           function getColSelectors(size) {
-            var selector = "";
+            var selector = ", ";
             for(var i = 1; i <= 12; i++) {
               selector += ".col-" + size + "-" + i + (i === 12 ? "" : ", ");
             }
