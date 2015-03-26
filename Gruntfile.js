@@ -294,8 +294,8 @@ module.exports = function (grunt) {
       },
       dist: {
         expand: true,
-        cwd: 'node_modules/elq/dist/',
-        src: '*',
+        cwd: 'node_modules/',
+        src: ['elq/dist/*', 'jquery/dist/jquery.*'],
         dest: 'dist/js/'
       }
     },

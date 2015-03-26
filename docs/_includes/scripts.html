@@ -1,7 +1,7 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="../dist/js/jquery/dist/jquery.min.js"></script>
 
 {% if site.github %}
   <script src="../dist/js/bootstrap.min.js"></script>
@@ -31,32 +31,64 @@
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="../assets/js/ie10-viewport-bug-workaround.js"></script>
 
-{% comment %}
-  Inject Twitter widgets asynchronously. Snippet snipped from Twitter's
-  JS interface site: https://dev.twitter.com/docs/tfw-javascript
-
-  * "js.async=1;" added to add async attribute to the generated script tag.
-{% endcomment %}
-<script>
-  window.twttr = (function (d,s,id) {
-    var t, js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return; js=d.createElement(s); js.id=id; js.async=1;
-    js.src="https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs);
-    return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f) } });
-  }(document, "script", "twitter-wjs"));
-</script>
-
 <!-- Analytics
 ================================================== -->
+
+<!-- ELQ -->
+<script src="../dist/js/elq/dist/elq.js"></script>
+<script src="../dist/js/elq/dist/elq-breakpoints.js"></script>
+<script src="../dist/js/elq/dist/elq-mirror.js"></script>
+
 <script>
-  var _gauges = _gauges || [];
-  (function() {
-    var t   = document.createElement('script');
-    t.async = true;
-    t.id    = 'gauges-tracker';
-    t.setAttribute('data-site-id', '4f0dc9fef5a1f55508000013');
-    t.src = '//secure.gaug.es/track.js';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(t, s);
-  })();
+  $(function initElq() {
+    function elqify() {
+      function doBreakpoints() {
+        var elements = [];
+        var $elements = $(".navbar, .bs-docs-header, .doc-container, .bs-docs-footer");
+
+        $elements.each(function(i, e) {
+          $(e).attr("elq", "");
+          $(e).attr("elq-breakpoints", "");
+          $(e).attr("elq-breakpoints-width", "480 768 992 1200");
+          elements.push(e);
+        });
+
+        return elements;
+      }
+      
+      function doMirrors() {
+        function getColSelectors(size) {
+          var selector = ", ";
+          for(var i = 1; i <= 12; i++) {
+            selector += ".col-" + size + "-" + i + (i === 12 ? "" : ", ");
+          }
+          return selector;
+        }
+
+        var selector = ".table-responsive, .form-horizontal, .form-inline, .visible-xs, .visible-sm, .visible-md, .visible-lg, .visible-xs-block, .visible-xs-inline, .visible-xs-inline-block, .visible-sm-block, .visible-sm-inline, .visible-sm-inline-block, .visible-md-block, .visible-md-inline, .visible-md-inline-block, .visible-lg-block, .visible-lg-inline, .visible-lg-inline-block, .hidden-xs, .hidden-sm, .hidden-md, .hidden-lg, .form-inline";
+        selector += getColSelectors("sm");
+        selector += getColSelectors("md");
+        selector += getColSelectors("lg");
+
+        var elements = $(selector);
+
+        elements.each(function(i, e) {
+          $(e).attr("elq", "");
+          $(e).attr("elq-mirror", "");
+        });
+
+        return elements;
+      }
+
+      return $.merge(doBreakpoints(), doMirrors());
+    }
+
+    elqBreakpoints.setConfig({
+      postfix: "px"
+    });
+    elq.use(elqBreakpoints);
+    elq.use(elqMirror);
+    var elements = elqify().concat(document.body);
+    elq.start(elements);
+  });
 </script>
