@@ -83,10 +83,9 @@
       return $.merge(doBreakpoints(), doMirrors());
     }
 
-    elqBreakpoints.setConfig({
+    elq.use(elqBreakpoints, {
       postfix: "px"
     });
-    elq.use(elqBreakpoints);
     elq.use(elqMirror);
     var elements = elqify().concat(document.body);
     elq.start(elements);
