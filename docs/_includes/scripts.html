@@ -41,22 +41,15 @@
 
 <script>
   $(function initElq() {
-    function elqify() {
-      function doBreakpoints() {
-        var elements = [];
-        var $elements = $(".navbar, .bs-docs-header, .doc-container, .bs-docs-footer");
+    //Creating the ELQ instance needs to be done once.
+    var elq = Elq();
+    elq.use(elqBreakpoints, {
+      postfix: "px" // Configures elq to use "px" as postfix.
+    });
+    elq.use(elqMirror);
 
-        $elements.each(function(i, e) {
-          $(e).attr("elq", "");
-          $(e).attr("elq-breakpoints", "");
-          $(e).attr("elq-breakpoints-width", "480 768 992 1200");
-          elements.push(e);
-        });
-
-        return elements;
-      }
-      
-      function doMirrors() {
+    function init() {
+      function getMirrorsSelector() {
         function getColSelectors(size) {
           var selector = ", ";
           for(var i = 1; i <= 12; i++) {
@@ -65,29 +58,43 @@
           return selector;
         }
 
-        var selector = ".container, .table-responsive, .form-horizontal, .form-inline, .visible-xs, .visible-sm, .visible-md, .visible-lg, .visible-xs-block, .visible-xs-inline, .visible-xs-inline-block, .visible-sm-block, .visible-sm-inline, .visible-sm-inline-block, .visible-md-block, .visible-md-inline, .visible-md-inline-block, .visible-lg-block, .visible-lg-inline, .visible-lg-inline-block, .hidden-xs, .hidden-sm, .hidden-md, .hidden-lg, .form-inline";
+        var selector = ".container, .table-responsive, .form-horizontal, .form-inline, .visible-xs, .visible-sm, .visible-md, .visible-lg, .visible-xs-block, .visible-xs-inline, .visible-xs-inline-block, .visible-sm-block, .visible-sm-inline, .visible-sm-inline-block, .visible-md-block, .visible-md-inline, .visible-md-inline-block, .visible-lg-block, .visible-lg-inline, .visible-lg-inline-block, .hidden-xs, .hidden-sm, .hidden-md, .hidden-lg, .form-inline, .navbar-header, .navbar-brand, .navbar-collapse, .navbar-toggle, .navbar-nav, .navbar-left, .navbar-right";
         selector += getColSelectors("sm");
         selector += getColSelectors("md");
         selector += getColSelectors("lg");
 
-        var elements = $(selector);
-
-        elements.each(function(i, e) {
-          $(e).attr("elq", "");
-          $(e).attr("elq-mirror", "");
-        });
-
-        return elements;
+        return selector;
       }
 
-      return $.merge(doBreakpoints(), doMirrors());
+      // Find all elements that have responsive classes.
+      var breakpointsElements = $("body, .container-fluid, .navbar, .bs-docs-header, .doc-container, .bs-docs-footer").toArray(); //.container-fluid, .navbar, ...
+      var containerElements   = $(".container").toArray(); //.container
+      var mirrorElements      = $(getMirrorsSelector()).toArray(); //.visible-xs, .col-md-1, .col-md-12, ...
+
+      // Add all attributes for the elq-breakpoints elements.
+      breakpointsElements.concat(containerElements).forEach(function (element) {
+        element.setAttribute("elq", "");
+        element.setAttribute("elq-breakpoints", "");
+        element.setAttribute("elq-breakpoints-width", "480 768 992 1200");
+      });
+
+      // Add all attributes for the elq-mirror elements.
+      mirrorElements.concat(containerElements).forEach(function (element) {
+        element.setAttribute("elq", "");
+        element.setAttribute("elq-mirror", "");
+      });
+
+      // Container elements are both elq-mirror and elq-breakpoints,
+      // and therefore the noclasses option is added so that the plugins 
+      // do not interfere with each other.
+      containerElements.forEach(function (element) {
+        element.setAttribute("elq-breakpoints", "noclasses");
+      });
+
+      var elements = breakpointsElements.concat(containerElements, mirrorElements);
+      elq.start(elements);
     }
 
-    elq.use(elqBreakpoints, {
-      postfix: "px"
-    });
-    elq.use(elqMirror);
-    var elements = elqify().concat(document.body);
-    elq.start(elements);
+    init();
   });
 </script>
