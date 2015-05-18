@@ -2,6 +2,7 @@
 // Navbars
 // --------------------------------------------------
 
+
 // Wrapper and base class
 //
 // Provide a static navbar from which we expand to create full-width, fixed, and
@@ -29,10 +30,10 @@
 
 .navbar-header {
   &:extend(.clearfix all);
-}
 
-.navbar.elq-width-above-@{grid-float-breakpoint} .navbar-header {
-  float: left; 
+  &.elq-width-above-@{grid-float-breakpoint} {
+    float: left;
+  }
 }
 
 
@@ -58,40 +59,45 @@
   &.in {
     overflow-y: auto;
   }
-}
 
-.navbar.elq-width-above-@{grid-float-breakpoint} .navbar-collapse {
-  width: auto;
-  border-top: 0;
-  box-shadow: none;
+  &.elq-width-above-@{grid-float-breakpoint} {
+    width: auto;
+    border-top: 0;
+    box-shadow: none;
 
-  &.collapse {
-    display: block !important;
-    visibility: visible !important;
-    height: auto !important;
-    padding-bottom: 0; // Override default setting
-    overflow: visible !important;
-  }
+    &.collapse {
+      display: block !important;
+      visibility: visible !important;
+      height: auto !important;
+      padding-bottom: 0; // Override default setting
+      overflow: visible !important;
+    }
 
-  &.in {
-    overflow-y: visible;
-  }
-}
+    &.in {
+      overflow-y: visible;
+    }
 
-.navbar.elq-width-above-@{grid-float-breakpoint} {
-  // Undo the collapse side padding for navbars with containers to ensure
-  // alignment of right-aligned contents.
-  &.navbar-fixed-top,
-  &.navbar-static-top,
-  &.navbar-fixed-bottom {
-    .navbar-collapse {
+    // Undo the collapse side padding for navbars with containers to ensure
+    // alignment of right-aligned contents.
+    .navbar-fixed-top &,
+    .navbar-static-top &,
+    .navbar-fixed-bottom & {
       padding-left: 0;
-      padding-right: 0; 
+      padding-right: 0;
     }
   }
 }
 
+.navbar-fixed-top,
+.navbar-fixed-bottom {
+  .navbar-collapse {
+    max-height: @navbar-collapse-max-height;
 
+    @media (max-device-width: @screen-xs-min) and (orientation: landscape) {
+      max-height: 200px;
+    }
+  }
+}
 
 
 // Both navbar header and collapse
@@ -104,14 +110,8 @@
   > .navbar-collapse {
     margin-right: -@navbar-padding-horizontal;
     margin-left:  -@navbar-padding-horizontal;
-  }
-}
 
-.navbar.elq-width-above-@{grid-float-breakpoint} {
-  .container,
-  .container-fluid {
-    > .navbar-header,
-    > .navbar-collapse {
+    &.elq-width-above-@{grid-float-breakpoint} {
       margin-right: 0;
       margin-left:  0;
     }
@@ -176,13 +176,11 @@
   > img {
     display: block;
   }
-}
 
-.navbar.elq-width-above-@{grid-float-breakpoint} {
-  > .container,
-  > .container-fluid {
-    .navbar-brand {
-      margin-left: -@navbar-padding-horizontal; 
+  &.elq-width-above-@{grid-float-breakpoint} {
+    .navbar > .container &,
+    .navbar > .container-fluid & {
+      margin-left: -@navbar-padding-horizontal;
     }
   }
 }
@@ -220,10 +218,10 @@
   .icon-bar + .icon-bar {
     margin-top: 4px;
   }
-}
 
-.navbar.elq-width-above-@{grid-float-breakpoint} .navbar-toggle {
-  display: none;
+  &.elq-width-above-@{grid-float-breakpoint} {
+    display: none;
+  }
 }
 
 
@@ -240,42 +238,42 @@
     padding-bottom: 10px;
     line-height: @line-height-computed;
   }
-}
 
-.navbar.elq-width-under-@{grid-float-breakpoint} .navbar-nav {
-  // Dropdowns get custom display when collapsed
-  .open .dropdown-menu {
-    position: static;
-    float: none;
-    width: auto;
-    margin-top: 0;
-    background-color: transparent;
-    border: 0;
-    box-shadow: none;
-    > li > a,
-    .dropdown-header {
-      padding: 5px 15px 5px 25px;
-    }
-    > li > a {
-      line-height: @line-height-computed;
-      &:hover,
-      &:focus {
-        background-image: none;
+  &.elq-width-under-@{grid-float-breakpoint} {
+    // Dropdowns get custom display when collapsed
+    .open .dropdown-menu {
+      position: static;
+      float: none;
+      width: auto;
+      margin-top: 0;
+      background-color: transparent;
+      border: 0;
+      box-shadow: none;
+      > li > a,
+      .dropdown-header {
+        padding: 5px 15px 5px 25px;
+      }
+      > li > a {
+        line-height: @line-height-computed;
+        &:hover,
+        &:focus {
+          background-image: none;
+        }
       }
     }
   }
-}
 
-// Uncollapse the nav
-.navbar.elq-width-above-@{grid-float-breakpoint} .navbar-nav {
-  float: left;
-  margin: 0;
-
-  > li {
+  // Uncollapse the nav
+  &.elq-width-above-@{grid-float-breakpoint} {
     float: left;
-    > a {
-      padding-top:    @navbar-padding-vertical;
-      padding-bottom: @navbar-padding-vertical;
+    margin: 0;
+
+    > li {
+      float: left;
+      > a {
+        padding-top:    @navbar-padding-vertical;
+        padding-bottom: @navbar-padding-vertical;
+      }
     }
   }
 }
@@ -378,16 +376,15 @@
 //
 // Declared after the navbar components to ensure more specificity on the margins.
 
-.navbar.elq-width-above-@{grid-float-breakpoint} .navbar-left {
-  .pull-left();
-}
+.elq-width-above-@{grid-float-breakpoint} {
+  &.navbar-left  { .pull-left(); }
+  &.navbar-right {
+    .pull-right();
+    margin-right: -@navbar-padding-horizontal;
 
-.navbar.elq-width-above-@{grid-float-breakpoint} .navbar-right {
-  .pull-right();
-  margin-right: -@navbar-padding-horizontal;
-
-  ~ .navbar-right {
-    margin-right: 0;
+    ~ .navbar-right {
+      margin-right: 0;
+    }
   }
 }
 
